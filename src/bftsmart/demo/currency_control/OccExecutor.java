@@ -11,12 +11,13 @@ class OccState{
 public class OccExecutor {
     public TransDBWrapper cache;
     public OccLayerDef occ_layer;
-    public int start_trans_number = occ_layer.committed_trans_num;
+    public int start_trans_number;
     public Queue<TransDBWrapper> backup_queue = new LinkedList<>();
 
     public OccExecutor(TransDBWrapper cache, OccLayerDef occ_layer){
         this.cache = cache;
         this.occ_layer = occ_layer;
+        start_trans_number = occ_layer.committed_trans_num;
     }
 
     public boolean validate() throws IOException{ // call until meet commit operation.
@@ -68,6 +69,6 @@ public class OccExecutor {
 //            TransDBWrapper _cache = this.backup_queue.poll();
 //            _cache.abort();
 //        }
-        System.out.println("Backup succeed.");
+//        System.out.println("Backup succeed.");
     }
 }

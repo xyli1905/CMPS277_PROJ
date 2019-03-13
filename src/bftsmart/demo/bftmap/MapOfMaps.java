@@ -54,8 +54,8 @@ public class MapOfMaps implements Serializable {
 	}
 
 	public byte[] getEntry(String tableName, String key) {
-		System.out.println("Table name: "+tableName);
-		System.out.println("Entry key: "+ key);
+//		System.out.println("Table name: "+tableName);
+//		System.out.println("Entry key: "+ key);
 		Map<String,byte[]> info= tableMap.get(tableName);
 		if (info == null) { 
                     System.out.println("Non-existant table: "+tableName);

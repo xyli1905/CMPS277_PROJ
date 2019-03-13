@@ -1,1 +1,1 @@
-java -cp bin/*:lib/* bftsmart.demo.currency_control.JTestClient $1 $2
+java -cp bin/*:lib/* bftsmart.demo.currency_control.UserTest $1 $2

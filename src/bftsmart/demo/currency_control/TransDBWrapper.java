@@ -30,7 +30,7 @@ class TransDBWrapper {
     public void abort(){
         this.copies.clear();
         this.read_set.clear();
-        System.out.println("Abort succeed.");
+//        System.out.println("Abort succeed.");
     }
 
     public boolean commit(){

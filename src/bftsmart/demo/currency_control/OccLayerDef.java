@@ -47,7 +47,7 @@ public class OccLayerDef {
         try {
             return exist_executor.validate();
         }catch (IOException e){
-            System.out.println(e);
+//            System.out.println(e);
             return false;
         }
     }

@@ -33,7 +33,7 @@ public class ReplicaDef extends DefaultSingleRecoverable {
 
     public void initDB(){
         this.localDB = new MapOfMaps();
-        localDB.addTable(tableName, new HashMap<>());
+        localDB.addTable(tableName, new HashMap<String, byte[]>());
         localDB.addData(tableName, "a", "1".getBytes());
         localDB.addData(tableName, "b", "2".getBytes());
         localDB.addData(tableName, "c", "3".getBytes());
@@ -49,13 +49,14 @@ public class ReplicaDef extends DefaultSingleRecoverable {
     }
 
     public String readFromReplicaLocalDB(String k){
-        System.out.println("In file ReplicaDef, In function readFromReplicaLocalDB, key is : " + k);
+//        System.out.println("In file ReplicaDef, In function readFromReplicaLocalDB, key is : " + k);
         byte[] reply = this.localDB.getEntry(tableName, k);
+        if (reply == null) return ""; //TODO
         return reply.toString();
     }
 
     public void writeToReplicaLocalDB(String k, String v){
-        System.out.println("In file ReplicaDef, In function writeToReplicaLocalDB, key is : " + k + " value is: " + v);
+//        System.out.println("In file ReplicaDef, In function writeToReplicaLocalDB, key is : " + k + " value is: " + v);
         this.localDB.addData(tableName,k, v.getBytes());
     }
 
@@ -103,7 +104,7 @@ public class ReplicaDef extends DefaultSingleRecoverable {
 
     @Override
     public byte[] appExecuteOrdered(byte[] command, MessageContext msgCtx) {
-        System.out.println("+++++++++++++ In file ReplicaDef, In function appExecuteOrdered +++++++++++++");
+//        System.out.println("+++++++++++++ In file ReplicaDef, In function appExecuteOrdered +++++++++++++");
         try {
             ByteArrayInputStream in = new ByteArrayInputStream(command);
             ByteArrayOutputStream out = null;
@@ -139,7 +140,7 @@ public class ReplicaDef extends DefaultSingleRecoverable {
 
     @Override
     public byte[] appExecuteUnordered(byte[] command, MessageContext msgCtx) {
-        System.out.println("+++++++++++++ In file ReplicaDef, In function appExecuteOrdered +++++++++++++");
+//        System.out.println("+++++++++++++ In file ReplicaDef, In function appExecuteOrdered +++++++++++++");
         try {
             ByteArrayInputStream in = new ByteArrayInputStream(command);
             ByteArrayOutputStream out = null;

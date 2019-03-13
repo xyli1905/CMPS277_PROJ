@@ -52,10 +52,10 @@ public class BFTMapList implements Serializable {
 	}
 
 	public String getEntry(String tableName, int index) {
-		System.out.println("Table name: "+tableName);
-		System.out.println("Entry index: "+ index);
+//		System.out.println("Table name: "+tableName);
+//		System.out.println("Entry index: "+ index);
 		List<String> info= tableList.get(tableName);
-		System.out.println("Table: "+info);
+//		System.out.println("Table: "+info);
 		return info.get(index);
 	}
 

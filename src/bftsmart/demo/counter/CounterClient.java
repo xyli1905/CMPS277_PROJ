@@ -66,14 +66,15 @@ public class CounterClient {
             for (int i = 0; i < numberOfOps; i++) {
 
                 if (wait) {
-                    System.out.println("Iteration " + i);
-                    System.out.println("Press Enter for next iteration, type 'exit' to exit or type 'go' to run all remaining iterations");
+//                    System.out.println("Iteration " + i);
+//                    System.out.println("Press Enter for next iteration, type 'exit' to exit or type 'go' to run all remaining iterations");
 
                     String lido = inReader.readLine();
 
                     if (lido.equals("exit")) {
                         break;
                     } else if (lido.equals("go")) {
+
                         wait = false;
                     }
                 }
@@ -81,7 +82,7 @@ public class CounterClient {
                 ByteArrayOutputStream out = new ByteArrayOutputStream(4);
                 new DataOutputStream(out).writeInt(inc);
 
-                System.out.println("Counter sending: " + i);
+//                System.out.println("Counter sending: " + i);
                 byte[] reply;
                 if(inc == 0)
                 	reply = counterProxy.invokeUnordered(out.toByteArray());
@@ -89,7 +90,7 @@ public class CounterClient {
                 	reply = counterProxy.invokeOrdered(out.toByteArray());
                 if(reply != null) {
                     int newValue = new DataInputStream(new ByteArrayInputStream(reply)).readInt();
-                    System.out.println("Counter value: " + newValue);
+//                    System.out.println("Counter value: " + newValue);
                     result = 0;
                 } else {
                     result = 1;
