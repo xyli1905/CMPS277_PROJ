@@ -64,10 +64,10 @@ public class OccExecutor {
 
     private void backup(){
         // At this time, simply use abort to implement backup.
-        while(this.backup_queue.peek() != null){
-            TransDBWrapper _cache = this.backup_queue.poll();
-            _cache.abort();
-        }
+//        while(this.backup_queue.peek() != null){
+//            TransDBWrapper _cache = this.backup_queue.poll();
+//            _cache.abort();
+//        }
         System.out.println("Backup succeed.");
     }
 }

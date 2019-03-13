@@ -8,14 +8,14 @@ class OperationType {
 }
 
 public class OperationDef{
-    public OperationDef(int trans_id, int type, String key, String val){
+    public OperationDef(String trans_id, int type, String key, String val){
         this.type = type;
         this.key = key;
         this.val = val;
         this.trans_id = trans_id;
     }
-    public int trans_id, type;
-    public String key, val;
+    public int type;
+    public String trans_id, key, val;
 }
 
 

@@ -8,8 +8,8 @@ class TransDBWrapper {
     public Map<String, String> copies = new HashMap<>();
     public Set<String> read_set = new HashSet<>();
     public ReplicaDef replicaDef;
-    public int trans_id;
-    public TransDBWrapper(ReplicaDef replicaDef, int trans_id){
+    public String trans_id;
+    public TransDBWrapper(ReplicaDef replicaDef, String trans_id){
         this.replicaDef = replicaDef;
         this.trans_id = trans_id;
     }
@@ -18,7 +18,7 @@ class TransDBWrapper {
         if (this.copies.containsKey(key)) {
             return this.copies.get(key);
         } else {
-            return this.replicaDef.readFromUniqueDB(key);
+            return this.replicaDef.readFromReplicaLocalDB(key);
         }
     }
 
@@ -35,7 +35,7 @@ class TransDBWrapper {
 
     public boolean commit(){
         for (String key : this.copies.keySet())
-            this.replicaDef.writeToUniqueDB(key,  this.copies.get(key));
+            this.replicaDef.writeToReplicaLocalDB(key,  this.copies.get(key));
         return true;
     }
 
