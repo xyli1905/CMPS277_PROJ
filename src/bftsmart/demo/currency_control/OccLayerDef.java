@@ -3,13 +3,13 @@ import bftsmart.tom.ServiceProxy;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.*;
+import java.util.Map;
 
 public class OccLayerDef {
     public ServiceProxy KVProxy;
     public ReplicaDef replica;
     public  Map<Integer, TransDBWrapper> wrapper_trans_map = new HashMap<>(); // key: tnc
-    public  Map<String, OccExecutor> executor_trans_map = new HashMap<>(); // key: id
+    public  Map<Integer, OccExecutor> executor_trans_map = new HashMap<>(); // key: id
     public  int committed_trans_num = 0;
 
     public OccLayerDef(int id, ReplicaDef replica){
@@ -17,32 +17,27 @@ public class OccLayerDef {
         this.replica = replica;
     }
 
-    public String create_or_update_executor_by_read_op(YCSBMessage op){
+    public String create_or_update_executor_by_read_op(OperationDef op){
         if (!this.executor_trans_map.containsKey(op.trans_id)){ // doesn't exist
             TransDBWrapper empty_wrapper = new TransDBWrapper(replica, op.trans_id);
             OccExecutor executor = new OccExecutor(empty_wrapper, this);
             executor_trans_map.put(op.trans_id, executor);
         }
         OccExecutor exist_executor = executor_trans_map.get(op.trans_id);
-        List<String> result = new ArrayList<>();
-
-        for (String key : op.getFields()){
-            result.add(exist_executor.cache.read(key));
-        }
-        return String.join(",", result);
+        return exist_executor.cache.read(op.key);
     }
 
-    public void create_or_update_executor_by_write_op(YCSBMessage op){
+    public void create_or_update_executor_by_write_op(OperationDef op){
         if (!this.executor_trans_map.containsKey(op.trans_id)){ // already exists
             TransDBWrapper empty_wrapper = new TransDBWrapper(replica, op.trans_id);
             OccExecutor executor = new OccExecutor(empty_wrapper, this);
             executor_trans_map.put(op.trans_id, executor);
         }
         OccExecutor exist_executor = executor_trans_map.get(op.trans_id);
-        exist_executor.cache.wtite(op.getKey(), new String(op.getValues().get(op.getKey())));
+        exist_executor.cache.wtite(op.key, op.val);
     }
 
-    public boolean create_or_update_executor_by_commit_op(YCSBMessage op){
+    public boolean create_or_update_executor_by_commit_op(OperationDef op){
         if (!this.executor_trans_map.containsKey(op.trans_id)){ // already exists
             TransDBWrapper empty_wrapper = new TransDBWrapper(replica, op.trans_id);
             OccExecutor executor = new OccExecutor(empty_wrapper, this);
@@ -72,6 +67,5 @@ public class OccLayerDef {
         wrapper_trans_map.put(committed_trans_num, cache);
         executor_trans_map.remove(cache.trans_id);
         return cache.commit();
-
     }
 }

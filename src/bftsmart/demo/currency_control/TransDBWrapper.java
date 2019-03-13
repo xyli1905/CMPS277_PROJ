@@ -8,8 +8,8 @@ class TransDBWrapper {
     public Map<String, String> copies = new HashMap<>();
     public Set<String> read_set = new HashSet<>();
     public ReplicaDef replicaDef;
-    public String trans_id;
-    public TransDBWrapper(ReplicaDef replicaDef, String trans_id){
+    public int trans_id;
+    public TransDBWrapper(ReplicaDef replicaDef, int trans_id){
         this.replicaDef = replicaDef;
         this.trans_id = trans_id;
     }

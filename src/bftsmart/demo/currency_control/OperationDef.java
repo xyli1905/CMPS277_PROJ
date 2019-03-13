@@ -8,14 +8,24 @@ class OperationType {
 }
 
 public class OperationDef{
-    public OperationDef(String trans_id, int type, String key, String val){
+    public OperationDef(int trans_id, int type, String key, String val){
         this.type = type;
         this.key = key;
         this.val = val;
         this.trans_id = trans_id;
     }
-    public int type;
-    public String trans_id, key, val;
+    public int trans_id, type;
+    public String key, val;
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("trans_id:").append(trans_id).append(";");
+        sb.append("type:").append(type).append(";");
+        sb.append("key:").append(key).append(";");
+        sb.append("val:").append(val).append(";");
+        return sb.toString();
+    }
 }
 
 
